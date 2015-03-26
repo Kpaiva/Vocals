@@ -66,7 +66,7 @@ namespace Vocals {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             System.Reflection.AssemblyName assemblyName = assembly.GetName();
             Version version = assemblyName.Version;
-            this.Text += " version : " + version.ToString();
+            //this.Text += " version : " + version.ToString();
 
             currentOptions = new Options();
             refreshSettings();
@@ -78,7 +78,7 @@ namespace Vocals {
                 if (speechEngine.Grammars.Count > 0) {
                     speechEngine.RecognizeAsync(RecognizeMode.Multiple);
                     SpeechSynthesizer synth = new SpeechSynthesizer();
-                    synth.SpeakAsync(currentOptions.answer);
+                    synth.SpeakAsync(currentOptions.answerOn);
                     listening = !listening;
                 }
 
@@ -87,7 +87,7 @@ namespace Vocals {
                 if (speechEngine.Grammars.Count > 0) {
                     speechEngine.RecognizeAsyncCancel();
                     SpeechSynthesizer synth = new SpeechSynthesizer();
-                    synth.SpeakAsync(currentOptions.answer);
+                    synth.SpeakAsync(currentOptions.answerOff);
                     listening = !listening;
                 }
             }
@@ -583,6 +583,40 @@ namespace Vocals {
         private void button6_Click(object sender, EventArgs e) {
             myWindows.Clear();
             refreshProcessesList();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (listening == false)
+            {
+                if (speechEngine.Grammars.Count > 0)
+                {
+                    speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+                    SpeechSynthesizer synth = new SpeechSynthesizer();
+                    synth.SpeakAsync(currentOptions.answerOn);
+                    listening = !listening;
+                }
+
+            }
+            else
+            {
+                if (speechEngine.Grammars.Count > 0)
+                {
+                    speechEngine.RecognizeAsyncCancel();
+                    SpeechSynthesizer synth = new SpeechSynthesizer();
+                    synth.SpeakAsync(currentOptions.answerOff);
+                    listening = !listening;
+                }
+            }
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormAbout formAbout = new FormAbout();
+            formAbout.ShowDialog();
+
+            //currentOptions = formOptions.opt;
+            refreshSettings();
         }
 
 

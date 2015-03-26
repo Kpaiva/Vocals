@@ -19,10 +19,13 @@ namespace Vocals {
         public string selectedType { get; set; }
 
         public Keys modifier { get; set; }
+        public List<Keys> newList { get; set; }
         
         public FormAction() {
 
             InitializeComponent();
+
+            newList = new List<Keys>();
 
             keyDataSource = (Keys[])Enum.GetValues(typeof(Keys)).Cast<Keys>();
 
@@ -37,7 +40,7 @@ namespace Vocals {
         public FormAction(Actions a) {
             InitializeComponent();
             keyDataSource = (Keys[])Enum.GetValues(typeof(Keys)).Cast<Keys>();
-           
+            newList = new List<Keys>();
 
             comboBox2.DataSource = keyDataSource;
 
@@ -50,18 +53,23 @@ namespace Vocals {
             numericUpDown1.Value = Convert.ToDecimal(a.timer);
             comboBox1.SelectedItem = a.type;
 
-            switch (a.keyModifier) {
-                case Keys.ControlKey:
+            foreach (Keys x in a.modifiers)
+            {
+                if (x == Keys.ControlKey)
+                {
                     checkBox1.Checked = true;
-                    break;
-                case Keys.ShiftKey:
+                    SaveChecks();
+                }
+                else if (x == Keys.LShiftKey)
+                {
                     checkBox2.Checked = true;
-                    break;
-                case Keys.Alt:
+                    SaveChecks();
+                }
+                else if (x == Keys.LMenu)
+                {
                     checkBox3.Checked = true;
-                    break;
-                default :
-                    break;
+                    SaveChecks();
+                }
             }
         }
 
@@ -100,6 +108,7 @@ namespace Vocals {
         }
 
         private void button1_Click(object sender, EventArgs e) {
+            SaveChecks();
             this.Close();
         }
 
@@ -110,37 +119,43 @@ namespace Vocals {
             this.Close();
         }
 
+        private void SaveChecks()
+        {
+            newList.Clear();
+            if (checkBox1.Checked)
+            {
+                newList.Add(Keys.ControlKey);
+            }
+            if (checkBox2.Checked)
+            {
+                newList.Add(Keys.LShiftKey);
+            }
+            if (checkBox3.Checked)
+            {
+                newList.Add(Keys.LMenu);
+            }
+        }
+
         private void checkBox1_CheckedChanged(object sender, EventArgs e) {
-            if (checkBox1.Checked) {
-                checkBox2.Checked = false;
-                checkBox3.Checked = false;
-                modifier = Keys.ControlKey;
-            }
-            else {
-                modifier = Keys.None;
-            }
+                SaveChecks();
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e) {
-            if (checkBox2.Checked) {
-                checkBox1.Checked = false;
-                checkBox3.Checked = false;
-                modifier = Keys.ShiftKey;
-            }
-            else {
-                modifier = Keys.None;
-            }
+                SaveChecks();
         }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e) {
-            if (checkBox3.Checked) {
-                checkBox1.Checked = false;
-                checkBox2.Checked = false;
-                modifier = Keys.Alt;
-            }
-            else {
-                modifier = Keys.None;
-            }
+                SaveChecks();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+
         }
 
 

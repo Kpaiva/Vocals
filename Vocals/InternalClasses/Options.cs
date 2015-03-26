@@ -13,7 +13,8 @@ namespace Vocals.InternalClasses {
 
         public bool toggleListening;
         public Keys key;
-        public string answer;
+        public string answerOn;
+        public string answerOff;
         public int threshold;
 
         public Options() {
@@ -23,7 +24,8 @@ namespace Vocals.InternalClasses {
             catch(Exception e){
                 toggleListening = false;
                 key = Keys.ShiftKey;
-                answer = "Toggle listening";
+                answerOn = "Toggle listening on";
+                answerOff = "Toggle listening off";
                 threshold = 0;
             }
         }
@@ -31,7 +33,8 @@ namespace Vocals.InternalClasses {
         public Options(Options o) {
             this.toggleListening = o.toggleListening;
             this.key = o.key;
-            this.answer = o.answer;
+            this.answerOn = o.answerOn;
+            this.answerOff = o.answerOff;
             this.threshold = o.threshold;
         }
 
@@ -57,7 +60,8 @@ namespace Vocals.InternalClasses {
                 XmlSerializer reader = new XmlSerializer(typeof(Options));
                 Options opt = (Options)reader.Deserialize(xmlStream);
                 this.toggleListening = opt.toggleListening;
-                this.answer = opt.answer;
+                this.answerOn = opt.answerOn;
+                this.answerOff = opt.answerOff;
                 this.threshold = opt.threshold;
                 this.key = opt.key;
 

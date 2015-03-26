@@ -76,18 +76,31 @@ namespace Vocals {
         [DllImport("User32.dll")]
         private static extern uint MapVirtualKey(uint uCode, uint uMapType);
 
-        public static void PressKey(Keys key, Keys modifier) {
+        public static void PressKey(Keys key, List<Keys> modifier) {
 
-            uint keyCodeModifier = (uint)modifier;
-            uint scanCodeModifier = MapVirtualKey(keyCodeModifier, 0);
-            VirtualKeyboard.SendKey(scanCodeModifier, KeyFlag.KeyDown | KeyFlag.Scancode);
+            foreach (Keys i in modifier)
+            {
+                uint keyCodeModifier = (uint)i;
+                uint scanCodeModifier = MapVirtualKey(keyCodeModifier, 0);
+                VirtualKeyboard.SendKey(scanCodeModifier, KeyFlag.KeyDown | KeyFlag.Scancode);
+            }
 
             uint keyCode = (uint)key;
             uint scanCode = MapVirtualKey(keyCode, 0);
+
+           
             VirtualKeyboard.SendKey(scanCode, KeyFlag.KeyDown | KeyFlag.Scancode);
+
             System.Threading.Thread.Sleep((int)(100));
+
             VirtualKeyboard.SendKey(scanCode, KeyFlag.KeyUp | KeyFlag.Scancode);
-            VirtualKeyboard.SendKey(scanCodeModifier, KeyFlag.KeyUp | KeyFlag.Scancode);
+
+            foreach (Keys i in modifier)
+            {
+                uint keyCodeModifier = (uint)i;
+                uint scanCodeModifier = MapVirtualKey(keyCodeModifier, 0);
+                VirtualKeyboard.SendKey(scanCodeModifier, KeyFlag.KeyUp | KeyFlag.Scancode);
+            }
            
 
         }

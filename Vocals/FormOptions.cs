@@ -18,8 +18,6 @@ namespace Vocals {
         public FormOptions() {
             InitializeComponent();
 
-
-
         }
 
 
@@ -34,7 +32,8 @@ namespace Vocals {
 
             checkBox1.Checked = opt.toggleListening;
             comboBox2.SelectedItem = opt.key;
-            richTextBox1.Text = opt.answer;
+            richTextBox1.Text = opt.answerOn;
+            richTextBox2.Text = opt.answerOff;
             trackBar1.Value = opt.threshold;
             label5.Text = Convert.ToString(opt.threshold);
 
@@ -43,10 +42,12 @@ namespace Vocals {
             if (checkBox1.Checked) {
                 comboBox2.Enabled = true;
                 richTextBox1.Enabled = true;
+                richTextBox2.Enabled = true;
             }
             else {
                 comboBox2.Enabled = false;
                 richTextBox1.Enabled = false;
+                richTextBox2.Enabled = false;
             }
 
         }
@@ -56,11 +57,13 @@ namespace Vocals {
                 if (checkBox1.Checked) {
                     comboBox2.Enabled = true;
                     richTextBox1.Enabled = true;
+                    richTextBox2.Enabled = true;
                     opt.toggleListening = true;
                 }
                 else {
                     comboBox2.Enabled = false;
                     richTextBox1.Enabled = false;
+                    richTextBox2.Enabled = false;
                     opt.toggleListening = false;
                 }
             }
@@ -85,7 +88,14 @@ namespace Vocals {
 
         private void richTextBox1_TextChanged(object sender, EventArgs e) {
             if (opt != null) {
-                opt.answer = richTextBox1.Text;
+                opt.answerOn = richTextBox1.Text;
+            }
+        }
+
+        private void richTextBox2_TextChanged(object sender, EventArgs e)
+        {
+            if (opt != null){
+                opt.answerOff = richTextBox2.Text;
             }
         }
 
@@ -96,6 +106,11 @@ namespace Vocals {
         private void button2_Click(object sender, EventArgs e) {
             opt = saveOptions;
             this.Close();
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
