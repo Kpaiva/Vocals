@@ -68,6 +68,8 @@ namespace Vocals {
             Version version = assemblyName.Version;
             //this.Text += " version : " + version.ToString();
 
+            richTextBox1.SelectionAlignment = HorizontalAlignment.Center; 
+
             currentOptions = new Options();
             refreshSettings();
 
@@ -91,6 +93,7 @@ namespace Vocals {
                     listening = !listening;
                 }
             }
+            updateToggledText();
         }
 
         protected override void WndProc(ref Message m) {
@@ -189,7 +192,7 @@ namespace Vocals {
             }
 
             speechEngine.MaxAlternates = 3;
-
+            updateToggledText();
 
         }
 
@@ -273,6 +276,7 @@ namespace Vocals {
                 if (speechEngine.Grammars.Count != 0) {
                     speechEngine.RecognizeAsync(RecognizeMode.Multiple);
                     listening = true;
+                    updateToggledText();
                 }
             }
         }
@@ -304,6 +308,7 @@ namespace Vocals {
             else {
                 speechEngine.UnloadAllGrammars();
             }
+            updateToggledText();
 
         }
 
@@ -332,6 +337,7 @@ namespace Vocals {
                     if (speechEngine.Grammars.Count != 0) {
                         speechEngine.RecognizeAsync(RecognizeMode.Multiple);
                         listening = true;
+                        updateToggledText();
                     }
                 }
             }
@@ -430,6 +436,7 @@ namespace Vocals {
                         if (speechEngine.Grammars.Count != 0) {
                             speechEngine.RecognizeAsync(RecognizeMode.Multiple);
                             listening = true;
+                            updateToggledText();
                         }
                     }
 
@@ -491,6 +498,7 @@ namespace Vocals {
                         if (speechEngine.Grammars.Count != 0) {
                             speechEngine.RecognizeAsync(RecognizeMode.Multiple);
                             listening = true;
+                            updateToggledText();
                         }
                     }
 
@@ -608,6 +616,24 @@ namespace Vocals {
                     listening = !listening;
                 }
             }
+
+            updateToggledText();
+        }
+
+        private void updateToggledText()
+        {
+            if (listening)
+            {
+                richTextBox2.BackColor = Color.Lime;
+                richTextBox2.Text = "Enabled";
+            }
+            else
+            {
+                richTextBox2.BackColor = Color.Red;
+                richTextBox2.Text = "Disabled";
+            }
+            
+            
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
