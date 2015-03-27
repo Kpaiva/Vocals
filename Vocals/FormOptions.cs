@@ -100,6 +100,7 @@ namespace Vocals {
         }
 
         private void button1_Click(object sender, EventArgs e) {
+            opt.answerOff = richTextBox2.Text;
             this.Close();
         }
 
